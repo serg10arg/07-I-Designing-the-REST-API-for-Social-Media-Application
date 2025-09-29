@@ -3,6 +3,7 @@ package com.example.restfulwebservices.controllers;
 import com.example.restfulwebservices.dao.UserDaoService;
 import com.example.restfulwebservices.exception.UserNotFoundException;
 import com.example.restfulwebservices.model.User;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -34,7 +35,7 @@ public class UserResource {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         // El usuario ya ha sido guardado y tiene un ID asignado
         User savedUser = service.save(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
