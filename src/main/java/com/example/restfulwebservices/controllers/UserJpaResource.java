@@ -2,6 +2,7 @@ package com.example.restfulwebservices.controllers;
 
 import com.example.restfulwebservices.exception.UserNotFoundException;
 import com.example.restfulwebservices.jpa.UserRepository;
+import com.example.restfulwebservices.model.Post;
 import com.example.restfulwebservices.model.User;
 import jakarta.validation.Valid;
 import org.springframework.hateoas.EntityModel;
@@ -47,6 +48,16 @@ public class UserJpaResource {
 
         return entityModel;
 
+    }
+
+    @GetMapping("/{id}/posts")
+    public List<Post> retrievePostsForUser(@PathVariable int id) {
+        Optional<User> user = repository.findById(id);
+
+        if(user.isEmpty())
+            throw new UserNotFoundException("id"+id);
+
+        return user.get().getPosts();
     }
 
     @DeleteMapping("/{id}")
